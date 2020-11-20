@@ -4,15 +4,24 @@ agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
+
+lobal_job_config:
+  env_vars:
+    - name: RAILS_ENV
+      value: 'test'
+    - name: DATABASE_URL
+      value: 'postgresql://postgres@localhost/test?encoding=utf8'
+    - name: BUNDLE_ARGS
+      value: '--deployment --without development staging production --jobs 4'
+
 blocks:
   - name: Quality
     task:
       jobs:
         - name: bundle
           commands:
-          - sem-version ruby 2.7.2
-          - bundle install --deployment --path vendor/bundle
-          - bin/rubocop
+            - bundle install ${BUNDLE_ARGS} --local
+            - bin/rubocop
 
   - name: Test
     task:
@@ -24,11 +33,9 @@ blocks:
       jobs:
         - name: Test
           commands:
-            - checkout
-            - sem-service start postgres 11
-            - sem-version ruby 2.7.2
-            - cache restore
-            - bundle install --deployment --path vendor/bundle
-            - cache store
-            - 'bundle exec rake db:setup'
-            - bundle exec rspec
+          - nvm use
+          - sem-version ruby 2.5.7
+          - bundle install ${BUNDLE_ARGS} --local
+          - sem-service start postgres
+          - bin/rails db:setup
+          - bin/rails assets:precompile
