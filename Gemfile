@@ -38,7 +38,6 @@ gem "kaminari"
 gem "puma", "~> 4.1"
 gem "pundit"
 gem "responders"
-gem "secure_headers"
 gem "seedbank"
 gem "shrine"
 
