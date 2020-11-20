@@ -10,7 +10,8 @@ blocks:
       jobs:
         - name: bundle
           commands:
-          - bundle install ${BUNDLE_ARGS} --local
+          - sem-version ruby 2.7.2
+          - bundle install --deployment --path vendor/bundle
           - bin/rubocop
 
   - name: Test
