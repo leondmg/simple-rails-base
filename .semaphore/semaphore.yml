@@ -33,9 +33,11 @@ blocks:
       jobs:
         - name: Test
           commands:
-          - nvm use
-          - sem-version ruby 2.5.7
-          - bundle install ${BUNDLE_ARGS} --local
-          - sem-service start postgres
-          - bin/rails db:setup
-          - bin/rails assets:precompile
+            - checkout
+            - sem-service start postgres 11
+            - sem-version ruby 2.7.2
+            - cache restore
+            - bundle install ${BUNDLE_ARGS} --local
+            - cache store
+            - 'bundle exec rake db:setup'
+            - bundle exec rspec
