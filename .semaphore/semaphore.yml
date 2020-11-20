@@ -5,6 +5,14 @@ agent:
     type: e1-standard-2
     os_image: ubuntu1804
 blocks:
+  - name: Quality
+    task:
+      jobs:
+        - name: bundle
+          commands:
+          - bundle install ${BUNDLE_ARGS} --local
+          - bin/rubocop
+
   - name: Test
     task:
       env_vars:
