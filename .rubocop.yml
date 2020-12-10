@@ -6,6 +6,7 @@ Rails:
   Enabled: true
 
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 2.7.2
   DisplayCopNames: true
   Exclude:
@@ -15,7 +16,7 @@ AllCops:
     - vendor/**/*
     - tmp/**/*
 
-Capybara/FeatureMethods:
+RSpec/Capybara:
   EnabledMethods:
     - background
     - feature

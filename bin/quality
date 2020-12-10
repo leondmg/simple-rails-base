@@ -3,3 +3,5 @@
 set -e
 
 bin/rubocop
+bin/scss-lint app/assets/stylesheets/
+bin/slim-lint app/views/
